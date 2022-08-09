@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 import { getUserByEmail, createUser } from "../repositories/authRepository.js";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -11,33 +12,33 @@ export async function signUp(req, res) {
         const existingUser = await getUserByEmail(email);
 
         if(existingUser.rowCount > 0) {
-            return res.status(409).send(alert("email já cadastrado")); //conflit
+            return res.status(409).send("email já cadastrado"); //conflit
         }
 
         await createUser(email, password, username, pictureUrl);
 
         res.status(201).send("usuário cadastrado com sucesso!"); //created
     } catch (error) {
-        res.status(500).send(error); //server error
+        res.status(500).send(error.message); //server error
     }
 }
 
 export async function signIn(req, res) {
-    const { emailLogin, passwordLogin } = req.body;
+    const { email, password } = req.body;
 
     try {
-        const { rows: dbUserArray } = await getUserByEmail(emailLogin);
+        const { rows: dbUserArray } = await getUserByEmail(email);
 
         if(dbUserArray.length === 0) {
-            return res.status(401).send(alert("email ou senha incorretos")); //unauthorized
+            return res.status(401).send("email ou senha incorretos"); //unauthorized
         }
 
         const dbUser = dbUserArray[0];
 
-        const correctPassword = bcrypt.compareSync(passwordLogin, dbUser.password);
+        const correctPassword = bcrypt.compareSync(password, dbUser.password);
 
         if(!correctPassword) {
-            return res.status(401).send(alert("email ou senha incorretos")); //unauthorized
+            return res.status(401).send("email ou senha incorretos"); //unauthorized
         }
 
         const token = jwt.sign({ id: dbUser.id }, process.env.JWT_SECRET);
@@ -46,6 +47,6 @@ export async function signIn(req, res) {
 
         res.status(200).send({ user: { ...dbUser }, token }); 
     } catch (error) {
-        res.status(500).send("erro ao logar usuário"); //server error
+        res.status(500).send(error.message); //server error
     }
 }
