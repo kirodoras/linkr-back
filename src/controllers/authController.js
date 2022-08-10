@@ -45,7 +45,7 @@ export async function signIn(req, res) {
 
         delete dbUser.password;
 
-        res.status(200).send({ user: { ...dbUser }, token }); 
+        res.status(200).send({ userData: { ...dbUser }, token }); 
     } catch (error) {
         res.status(500).send(error.message); //server error
     }
