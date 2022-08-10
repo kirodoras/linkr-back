@@ -1,7 +1,7 @@
 import joi from "joi";
 
 const postsSchema = joi.object({
-    url: joi.string().required(),
+    url: joi.string().uri().required(),
     article: joi.string()
 });
 
