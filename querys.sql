@@ -11,7 +11,7 @@ CREATE TABLE posts (
     id SERIAL NOT NULL PRIMARY KEY,
     "userId" INTEGER REFERENCES users(id),
     url TEXT NOT NULL,
-    article TEXT NOT NULL,
+    article TEXT,
     "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
 );
 
