@@ -1,8 +1,8 @@
 import express from 'express'
-import { hashtagController } from '../controllers/hashtagController.js'
+import { insert_new_hashtag } from '../controllers/hashtagController.js'
 const router=express.Router();
 
-router.get('/hashtag/:hashtagName',hashtagController);
+router.get('/hashtag/:hashtagName',insert_new_hashtag);
 
 export default router;
 
