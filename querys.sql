@@ -12,6 +12,9 @@ CREATE TABLE posts (
     "userId" INTEGER REFERENCES users(id),
     url TEXT NOT NULL,
     article TEXT,
+    title TEXT DEFAULT 'Title',
+    descripton TEXT DEFAULT 'Description',
+    image TEXT,
     "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
 );
 
