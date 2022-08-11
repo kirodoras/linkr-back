@@ -30,6 +30,7 @@ export async function getLike(req, res) {
 export async function deleteLike(req, res) {
     const { userId, postId } = req.query;
 
+    console.log(userId, postId);
     try {
         await removeLike(userId, postId);
 
