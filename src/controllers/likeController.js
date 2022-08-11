@@ -28,7 +28,7 @@ export async function getLike(req, res) {
 }
 
 export async function deleteLike(req, res) {
-    const { userId, postId } = req.body;
+    const { userId, postId } = req.query;
 
     try {
         await removeLike(userId, postId);
