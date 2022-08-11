@@ -6,7 +6,7 @@ import { validateSchema } from "../middlewares/schemaValidator.js";
 
 const likeRouter = Router();
 
-likeRouter.post("/like",validateSchema(likeSchema), requireToken, postLike);
+likeRouter.post("/like", validateSchema(likeSchema), requireToken, postLike);
 likeRouter.post("/deletelike", deleteLike);
 likeRouter.get("/like", getLike);
 
