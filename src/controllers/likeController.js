@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { addLike, findLike, removeLike } from "../repositories/likeRepository.js";
+import { addLike, checkLike, findLike, removeLike } from "../repositories/likeRepository.js";
 
 dotenv.config();
 
@@ -7,6 +7,10 @@ export async function postLike(req, res) {
     const { userId, postId } = req.body;
 
     try {
+        if (checkLike(userId, postId) > 0) {
+            res.status(409).send("usuario ja deu like");
+            return;
+        }
         await addLike(userId, postId);
 
         res.status(201).send("like adicionado com sucesso!");
@@ -16,11 +20,10 @@ export async function postLike(req, res) {
 }
 
 export async function getLike(req, res) {
-    const { post } = req.body;
-
+    const { postId } = req.query;
     try {
-        const { rows: users } = await findLike(post);
-
+        const { rows: users } = await findLike(postId);
+        
         res.status(200).send(users);
     } catch (error) {
         res.status(500).send(error.message);
@@ -30,7 +33,6 @@ export async function getLike(req, res) {
 export async function deleteLike(req, res) {
     const { userId, postId } = req.query;
 
-    console.log(userId, postId);
     try {
         await removeLike(userId, postId);
 
