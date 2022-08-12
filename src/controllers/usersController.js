@@ -6,8 +6,7 @@ export async function getUsersByName(req, res) {
 
         if (username) {
             const { rows: users } = await selectUsersByName(username);
-
-            console.log(users);
+            
             return res.send(users);
         }
 

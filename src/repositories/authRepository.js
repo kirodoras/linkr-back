@@ -10,7 +10,7 @@ export async function createUser(email, password, username, pictureUrl) {
     const SALT = 10;
     const passwordHash = bcrypt.hashSync(password, SALT);
 
-    const now = dayjs().format("YYYY-MM-DD");
+    const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
     return connection.query(`
         INSERT INTO users 
