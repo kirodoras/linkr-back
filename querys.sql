@@ -13,7 +13,7 @@ CREATE TABLE posts (
     url TEXT NOT NULL,
     article TEXT,
     title TEXT DEFAULT 'Title',
-    descripton TEXT DEFAULT 'Description',
+    description TEXT DEFAULT 'Description',
     image TEXT,
     "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
 );
