@@ -11,9 +11,10 @@ export async function selectUsersByName(username) {
 export async function selectPostsUser(id) {
     console.log(id);
     return connection.query(`
-        SELECT users.username, users."pictureUrl", posts.* 
-        FROM posts JOIN users
+        SELECT posts.id AS "postId", posts."userId", posts.url, posts.article, posts.title, posts.image, posts.description, users.username, users."pictureUrl" 
+        FROM users LEFT JOIN posts
         ON posts."userId" = users.id
         WHERE users.id = $1
+        ORDER BY posts."createdAt" DESC;
     `, [id]);
 }
