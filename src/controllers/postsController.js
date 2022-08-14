@@ -1,4 +1,5 @@
-import { insertPost, selectPosts } from "../repositories/postsRepository.js";
+import { insertPost, selectPosts, deletePostById, deleteLikesPostByPostId, deleteHashtagsPostByPostId } from "../repositories/postsRepository.js";
+
 export async function publishPost(req, res) {
     try {
         const { userId } = res.locals;
@@ -15,6 +16,18 @@ export async function getPosts(req, res) {
     try {
         const { rows } = await selectPosts();
         res.send(rows);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+export async function deletePost(req, res) {
+    try {
+        const { postId } = req.params;
+        await deleteLikesPostByPostId(postId);
+        await deleteHashtagsPostByPostId(postId);
+        await deletePostById(postId);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).send(error.message);
     }
