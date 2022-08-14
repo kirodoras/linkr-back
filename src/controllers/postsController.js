@@ -32,3 +32,13 @@ export async function deletePost(req, res) {
         res.status(500).send(error.message);
     }
 }
+
+export async function editPost(req, res) {
+    try {
+        const { postId } = req.params;
+        //editar post
+        res.sendStatus(204);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
