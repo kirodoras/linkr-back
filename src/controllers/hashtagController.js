@@ -1,4 +1,4 @@
-import { insertNewHashtag, getHashtag, insertPostHashtag } from '../repositories/hashtagRepository.js'
+import { insertNewHashtag, selectHashtag, insertPostHashtag, getHashtags } from '../repositories/hashtagRepository.js'
 import express from 'express'
 
 export async function insert_new_hashtag(hashtags,post_id){
@@ -19,7 +19,7 @@ export async function insert_new_hashtag(hashtags,post_id){
         } catch (error) {
             if(error.message === 'duplicate key value violates unique constraint "hashtags_name_key"'){
 
-                hashtag_id = await hashtagsRepository.getHashtag(hashtag);
+                hashtag_id = await selectHashtag(hashtag);
                 hashtag_id = hashtag_id.rows[0].id;
             }
         }
@@ -31,10 +31,11 @@ export async function insert_new_hashtag(hashtags,post_id){
 export async function get_hashtags(req,res){
    
     try {
-        const { rows:hashtags } = await getHashtag()
+        const { rows:hashtags } = await getHashtags()
         console.log(hashtags)
-        res.status(200).send(hashtags)
+        return res.status(200).send(hashtags)
     } catch (error) {
-        
+        res.send(error)
     }
 }
+

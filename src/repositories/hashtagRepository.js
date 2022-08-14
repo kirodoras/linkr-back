@@ -7,11 +7,24 @@ export async function insertNewHashtag(hashtag){
 }
 
 //pegar a hashtag clicada:
-export async function getHashtag(hashtag){
-    await connection.query(` SELECT id FROM hashtags WHERE name=$1`,[hashtag])
+export function selectHashtag(hashtag) {
+    connection.query(`SELECT id FROM hashtags WHERE name = $1`, [hashtag]);
+}
+
+
+export function getHashtags() {
+    connection.query(`
+            SELECT hash.name, COUNT(hp.*)  
+            FROM hashtagsPosts hp
+            INNER JOIN hashtags hash on hash.id = hp."hashtagId"
+            GROUP BY hash.name
+            ORDER BY COUNT DESC, hash.name
+            LIMIT 9;
+        `);
 }
 
 //função para inserir hashtags nos posts:
 export async function insertPostHashtag(hashtag_id,post_id){
     connection.query(`INSERT INTO hashtagsPosts ("postId","hashtagId") VALUES ($1,$2)`,[post_id,hashtag_id])
 }
+

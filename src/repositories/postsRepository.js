@@ -21,3 +21,16 @@ export async function selectPosts() {
         LIMIT 20
     `);
 }
+
+//pegar post por hashtag
+export function getPostByHashtag(hashtag){
+    return connection.query(`
+            SELECT *
+            FROM posts p
+            LEFT JOIN users u on p."userId" = u.id 
+            WHERE article LIKE $1
+            GROUP BY article,p.id
+            ORDER BY p.id DESC
+            LIMIT 20
+        `, [`%#${hashtag}%`]);
+}
