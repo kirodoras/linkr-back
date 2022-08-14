@@ -22,3 +22,30 @@ export async function selectPosts() {
         LIMIT 20
     `);
 }
+
+export async function selectPostById(postId) {
+    return connection.query(`
+        SELECT posts.id AS "postId", posts."userId", posts.url, posts.article, posts.title, posts.image, posts.description, users.username, users."pictureUrl" 
+        FROM posts
+        JOIN users ON users.id = posts."userId"
+        WHERE posts.id = $1
+    `, [postId]);
+}
+
+export async function deletePostById(postId) {
+    return connection.query(`
+        DELETE FROM posts WHERE posts.id = $1
+    `, [postId]);
+}
+
+export async function deleteLikesPostByPostId(postId) {
+    return connection.query(`
+        DELETE FROM likes l WHERE l."postId" = $1
+    `, [postId]);
+}
+
+export async function deleteHashtagsPostByPostId(postId) {
+    return connection.query(`
+        DELETE FROM hashtagsposts h WHERE  h."postId" = $1
+    `, [postId]);
+}
