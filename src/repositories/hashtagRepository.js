@@ -23,7 +23,7 @@ export function getHashtags() {
         `);
 }
 
-//função para inserir hashtags nos posts:
+//função para inserir hashtags nos postsHashtag - tabela intermediaria:
 export async function insertPostHashtag(hashtag_id,post_id){
     connection.query(`INSERT INTO hashtagsPosts ("postId","hashtagId") VALUES ($1,$2)`,[post_id,hashtag_id])
 }

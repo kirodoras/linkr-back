@@ -9,7 +9,7 @@ export async function insertPost(userId, url, article) {
         INSERT INTO posts 
         ("userId", url, article, "createdAt") 
         VALUES 
-        ($1, $2, $3, $4)
+        ($1, $2, $3, $4) RETURNING id
     `, [userId, url, article, now]);
 }
 
@@ -23,7 +23,7 @@ export async function selectPosts() {
 }
 
 //pegar post por hashtag
-export function getPostByHashtag(hashtag){
+export async function getPostByHashtag(hashtag){
     return connection.query(`
             SELECT *
             FROM posts p

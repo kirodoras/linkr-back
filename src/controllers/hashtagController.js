@@ -11,7 +11,7 @@ export async function insert_new_hashtag(hashtags,post_id){
         }
 
         let hashtag_id;
-
+        
         try {
             hashtag_id = await insertNewHashtag(hashtag)
 

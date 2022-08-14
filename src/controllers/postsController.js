@@ -25,14 +25,17 @@ export async function getPosts(req, res) {
     let result =null;
     if(hashtag){
         result = await getPostByHashtag(hashtag);
+
+        if(result.rows.length==0){
+            return res.send([])
+        }
+
+        return res.send({result})
     }
-    if(result!=null && result.rows.length==0){
-        return res.send([])
-    }
-   
-else{
-    const { rows } = await selectPosts();
-        return res.send(rows);
+
+if(!hashtag){
+    result = await selectPosts()
+    return res.send(result.rows)
 }
    
 }
