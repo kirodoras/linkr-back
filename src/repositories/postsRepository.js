@@ -4,7 +4,10 @@ import dayjs from "dayjs";
 
 export async function insertPost(userId, url, article, title, description, image) {
     const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
-    const insertImage = image.length > 0 ? image : null;
+    let insertImage = image.length > 0 ? image : null;
+    if(typeof insertImage === 'string' && !insertImage?.startsWith("http")) {
+        insertImage = null;
+    }
     return connection.query(`
         INSERT INTO posts 
         ("userId", url, article, title, description, image, "createdAt") 
