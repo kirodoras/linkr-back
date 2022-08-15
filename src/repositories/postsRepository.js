@@ -49,3 +49,10 @@ export async function deleteHashtagsPostByPostId(postId) {
         DELETE FROM hashtagsposts h WHERE  h."postId" = $1
     `, [postId]);
 }
+
+export async function updatePostById(postId, newArticle) {
+    return connection.query(`
+        UPDATE posts 
+        SET article=$1 WHERE id=$2
+    `, [newArticle, postId]);
+}
