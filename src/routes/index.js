@@ -5,7 +5,9 @@ import postsRouter from './postsRouter.js';
 import usersRouter from './usersRouter.js';
 
 const router = Router();
-
+router.get("/", (req, res) => {
+    res.send("Online");
+})
 router.use(authRouter);
 router.use(postsRouter);
 router.use(likeRouter);
