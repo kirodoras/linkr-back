@@ -1,4 +1,4 @@
-import { insertPost, selectPosts, deletePostById, deleteLikesPostByPostId, deleteHashtagsPostByPostId } from "../repositories/postsRepository.js";
+import { insertPost, selectPosts, deletePostById, deleteLikesPostByPostId, deleteHashtagsPostByPostId, updatePostById } from "../repositories/postsRepository.js";
 
 export async function publishPost(req, res) {
     try {
@@ -36,8 +36,9 @@ export async function deletePost(req, res) {
 export async function editPost(req, res) {
     try {
         const { postId } = req.params;
-        //editar post
-        res.sendStatus(204);
+        const { newArticle } = req.body;
+        await updatePostById(postId, newArticle);
+        res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error.message);
     }
