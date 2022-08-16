@@ -13,6 +13,7 @@ export async function insertPost(userId, url, article, title, description, image
         ("userId", url, article, title, description, image, "createdAt") 
         VALUES 
         ($1, $2, $3, $4, $5, $6, $7)
+        RETURNING id
     `, [userId, url, article, title, description, insertImage, now]);
 }
 

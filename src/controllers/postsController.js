@@ -5,7 +5,8 @@ export async function publishPost(req, res) {
         const { userId } = res.locals;
         const { title, description, image } = res.locals.filterMetadata;
         const { url, article } = req.body;
-        await insertPost(userId, url, article, title, description, image);
+        const { rows } = await insertPost(userId, url, article, title, description, image);
+        console.log(rows[0].id);
         res.sendStatus(201);
     } catch (error) {
         res.status(500).send(error.message);
