@@ -24,3 +24,19 @@ export async function selectHashtagsByName(name) {
         SELECT * FROM hashtags WHERE name = $1
     `, [name]);
 }
+
+export async function selectPostsByHashtagName(name) {
+    return connection.query(`
+        SELECT posts.id AS "postId", posts."userId", posts.url, posts.article, posts.title, posts.image, posts.description, users.username, users."pictureUrl" 
+        FROM hashtags
+        JOIN hashtagsposts 
+        ON hashtagsposts."hashtagId" = hashtags.id
+        JOIN posts 
+        ON posts.id = hashtagsposts."postId"
+        JOIN users 
+        ON users.id = posts."userId"
+        WHERE hashtags.name = $1
+        ORDER BY posts."createdAt" DESC
+        LIMIT 20
+    `, [name]);
+}

@@ -5,8 +5,7 @@ export async function filterHashtags(req, res, next) {
         const { article } = req.body;
         let hashtags = article.split(" ").filter((value) => value.startsWith("#")).filter((value) => value.length > 1);
         let hashtagsNames = hashtags.map((value) => value.substring(1));
-        console.log(hashtagsNames);
-        res.locals.hashtagsNames = hashtagsNames;
+        res.locals.hashtagsNames = [... new Set(hashtagsNames)];
         next();
     } catch (error) {
         res.status(500).send(error.message);
@@ -27,8 +26,7 @@ export async function createHashtags(req, res, next) {
                 hashtagsIds.push(select[0].id);
             }
         }
-        console.log(hashtagsIds);
-        res.locals.hashtagsIds = hashtagsIds;
+        res.locals.hashtagsIds = [... new Set(hashtagsIds)];
         next();
     } catch (error) {
         res.status(500).send(error.message);
