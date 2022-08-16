@@ -3,6 +3,7 @@ import authRouter from './authRouter.js';
 import likeRouter from './likeRouter.js';
 import postsRouter from './postsRouter.js';
 import usersRouter from './usersRouter.js';
+import followRouter from './followRouter.js';
 
 const router = Router();
 router.get("/", (req, res) => {
@@ -12,5 +13,6 @@ router.use(authRouter);
 router.use(postsRouter);
 router.use(likeRouter);
 router.use(usersRouter);
+router.use(followRouter);
 
 export default router;
