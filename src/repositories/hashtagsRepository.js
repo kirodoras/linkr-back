@@ -40,3 +40,15 @@ export async function selectPostsByHashtagName(name) {
         LIMIT 20
     `, [name]);
 }
+
+export async function selectTrendingHashtags() {
+    return connection.query(`
+        SELECT h.id, h.name, COUNT(hp."postId") as amount
+        FROM hashtags h
+        JOIN hashtagsposts hp
+        ON hp."hashtagId" = h.id
+        GROUP BY h.id
+        ORDER BY amount DESC
+        LIMIT 10
+    `);
+}
