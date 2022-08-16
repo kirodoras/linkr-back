@@ -1,11 +1,16 @@
 import { insertPost, selectPosts, deletePostById, deleteLikesPostByPostId, deleteHashtagsPostByPostId, updatePostById } from "../repositories/postsRepository.js";
+import { insertHashtagsPost } from "../repositories/hashtagsRepository.js";
 
 export async function publishPost(req, res) {
     try {
-        const { userId } = res.locals;
+        const { userId, hashtagsIds } = res.locals;
         const { title, description, image } = res.locals.filterMetadata;
         const { url, article } = req.body;
-        await insertPost(userId, url, article, title, description, image);
+        const { rows } = await insertPost(userId, url, article, title, description, image);
+        for(let i = 0; i < hashtagsIds.length; i++) {
+            let id = hashtagsIds[i];
+            await insertHashtagsPost(rows[0].id, id);
+        }
         res.sendStatus(201);
     } catch (error) {
         res.status(500).send(error.message);
