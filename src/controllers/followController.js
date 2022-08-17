@@ -24,6 +24,6 @@ export async function deleteFollow(req, res) {
     }
 }
 
-export async function getFollows(req, res) {
+export async function getFollowers(req, res) {
 
 }
