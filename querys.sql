@@ -35,3 +35,9 @@ CREATE TABLE hashtagsPosts (
 	"postId" INTEGER REFERENCES posts(id),
     "hashtagId" INTEGER REFERENCES hashtags(id)
 );
+
+CREATE TABLE follows (
+   id SERIAL NOT NULL PRIMARY KEY,
+   "followerId" INTEGER REFERENCES users(id),
+   "followedId" INTEGER REFERENCES users(id) 
+);

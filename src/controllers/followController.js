@@ -1,4 +1,4 @@
-import { addFollow, removeFollow } from "../repositories/followRepository.js";
+import { addFollow, removeFollow, selectFollowers } from "../repositories/followRepository.js";
 
 export async function postFollow(req, res) {
     const { followerId, followedId } = req.body;
@@ -25,5 +25,13 @@ export async function deleteFollow(req, res) {
 }
 
 export async function getFollowers(req, res) {
+    const { id } = req.params;
 
+    try {
+        const { rows: followers } = await selectFollowers(id);
+
+        res.status(200).send(followers);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 }

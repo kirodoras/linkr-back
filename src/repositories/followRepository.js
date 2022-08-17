@@ -17,6 +17,9 @@ export async function removeFollow(followerId, followedId) {
     `, [followerId, followedId])
 }
 
-export async function findFollows() {
-    
+export async function selectFollowers(id) {
+    return connection.query(`
+        SELECT "followedId" FROM follows
+        WHERE "followerId" = $1
+    `, [id]);
 }
