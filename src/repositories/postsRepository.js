@@ -23,7 +23,7 @@ export async function selectPosts(userId) {
         FROM posts
         JOIN users ON users.id = posts."userId"
         JOIN follows ON follows."followedId" = users.id
-        WHERE follows."followerId" = $1
+        WHERE follows."followerId" = $1 OR users.id = posts."userId"
         ORDER BY posts."createdAt" DESC
         LIMIT 20
     `, [userId]);
