@@ -1,5 +1,16 @@
 import connection from "../databases/postgres.js";
 
+export async function selectUsersFollowedByName(username, id) {
+    return connection.query(`
+        SELECT users.id, users.username, users."pictureUrl"
+        FROM users 
+        JOIN follows
+        ON users.id = follows."followedId"
+        WHERE users.username ILIKE $1
+        AND follows."followerId" = $2
+    `, [username + '%', id]);
+}
+
 export async function selectUsersByName(username) {
     return connection.query(`
         SELECT id, username, "pictureUrl"
@@ -7,6 +18,7 @@ export async function selectUsersByName(username) {
         WHERE username ILIKE $1
     `, [username + '%']);
 }
+
 
 export async function selectPostsUser(id) {
     console.log(id);
