@@ -11,7 +11,7 @@ import { filterHashtags, createHashtags } from '../middlewares/hashtagsMiddlewar
 const postsRouter = Router();
 
 postsRouter.post("/timeline", validateSchema(postsSchema), requireToken, getUrlMetadata, filterHashtags, createHashtags, publishPost);
-postsRouter.get("/timeline", getPosts);
+postsRouter.get("/timeline/:userId", getPosts);
 postsRouter.delete("/timeline/:postId", requireToken, checkPostOwner, deletePost);
 postsRouter.put("/timeline/:postId", requireToken, checkPostOwner, validateSchema(articleSchema), editPost);
 
