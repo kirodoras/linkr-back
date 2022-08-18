@@ -19,7 +19,8 @@ export async function publishPost(req, res) {
 
 export async function getPosts(req, res) {
     try {
-        const { rows } = await selectPosts();
+        const { userId } = req.params;
+        const { rows } = await selectPosts(userId);
         res.send(rows);
     } catch (error) {
         res.status(500).send(error.message);
