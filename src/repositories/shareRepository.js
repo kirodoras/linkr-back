@@ -28,9 +28,9 @@ export async function selectPostsShares(userId) {
         SELECT posts.id AS "postId", posts."userId", posts.url, posts.article, posts.title, posts.image, posts.description, users.username, users."pictureUrl", posts."createdAt" as "createdAt" , users.username as "sharedBy" 
         FROM posts
         JOIN shares ON posts.id = shares."postId"
-        JOIN users ON users.id = shares."userId"
+        JOIN users ON users.id = posts."userId"
         LEFT JOIN follows ON follows."followedId" = shares."userId"
-        WHERE follows."followerId" = $1 OR posts."userId" = $1
+        WHERE follows."followerId" = $1 OR shares."userId" = $1
         ORDER BY posts."createdAt" DESC
         LIMIT 20
     `, [userId]);
