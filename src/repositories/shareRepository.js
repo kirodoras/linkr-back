@@ -7,6 +7,12 @@ export async function insertShare(userId, postId) {
     `, [userId, postId]);
 }
 
+export async function deleteShare(postId) {
+    return connection.query(`
+        DELETE FROM shares WHERE shares."postId" = $1
+    `, [postId]);
+}
+
 export async function countAmountOfShares(postId) {
     return connection.query(`
         SELECT COUNT(shares."postId") as amount
@@ -24,7 +30,7 @@ export async function selectPostsShares(userId) {
         JOIN shares ON posts.id = shares."postId"
         JOIN users ON users.id = shares."userId"
         LEFT JOIN follows ON follows."followedId" = shares."userId"
-        WHERE follows."followerId" = $1 OR users.id = shares."userId"
+        WHERE follows."followerId" = $1 OR posts."userId" = $1
         ORDER BY posts."createdAt" DESC
         LIMIT 20
     `, [userId]);

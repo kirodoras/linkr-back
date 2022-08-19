@@ -1,6 +1,7 @@
 import { insertPost, selectPosts, deletePostById, deleteLikesPostByPostId, deleteHashtagsPostByPostId, updatePostById } from "../repositories/postsRepository.js";
 import { insertHashtagsPost } from "../repositories/hashtagsRepository.js";
 import { selectPostsShares } from "../repositories/shareRepository.js";
+import { deleteShare } from "../repositories/shareRepository.js";
 
 export async function publishPost(req, res) {
     try {
@@ -36,6 +37,7 @@ export async function getPosts(req, res) {
 export async function deletePost(req, res) {
     try {
         const { postId } = req.params;
+        await deleteShare(postId);
         await deleteLikesPostByPostId(postId);
         await deleteHashtagsPostByPostId(postId);
         await deletePostById(postId);
