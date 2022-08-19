@@ -16,3 +16,13 @@ export async function countAmountOfComments(postId) {
         GROUP BY comments."postId"
     `, [postId]);
 }
+
+export async function getCommentsByPostId(postId) {
+    return connection.query(`
+        SELECT comments."userId", users.username, users."pictureUrl", comments.comment
+        FROM comments
+        JOIN users ON users.id = comments."userId"
+        WHERE comments."postId" = $1
+        ORDER BY comments."createdAt"
+    `, [postId]);
+}
