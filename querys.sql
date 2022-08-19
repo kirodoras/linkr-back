@@ -48,3 +48,11 @@ CREATE TABLE shares (
    "postId" INTEGER REFERENCES posts(id),
    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
 );
+
+CREATE TABLE comments (
+    id SERIAL NOT NULL PRIMARY KEY,
+   "userId" INTEGER REFERENCES users(id),
+   "postId" INTEGER REFERENCES posts(id),
+   comment TEXT NOT NULL,
+   "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
+);
