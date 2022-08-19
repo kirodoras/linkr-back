@@ -5,6 +5,7 @@ import postsRouter from './postsRouter.js';
 import usersRouter from './usersRouter.js';
 import followRouter from './followRouter.js';
 import hashtagsRouter from './hashtagsRouter.js';
+import shareRouter from './shareRouter.js';
 
 const router = Router();
 router.get("/", (req, res) => {
@@ -16,5 +17,6 @@ router.use(likeRouter);
 router.use(usersRouter);
 router.use(followRouter);
 router.use(hashtagsRouter);
+router.use(shareRouter)
 
 export default router;

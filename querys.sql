@@ -45,5 +45,6 @@ CREATE TABLE follows (
 CREATE TABLE shares (
    id SERIAL NOT NULL PRIMARY KEY,
    "userId" INTEGER REFERENCES users(id),
-   "postId" INTEGER REFERENCES posts(id)
+   "postId" INTEGER REFERENCES posts(id),
+   "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
 );
