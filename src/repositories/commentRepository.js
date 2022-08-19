@@ -7,6 +7,12 @@ export async function insertComment(userId, postId, comment) {
     `, [userId, postId, comment]);
 }
 
+export async function deleteComment(postId) {
+    return connection.query(`
+        DELETE FROM comments WHERE comments."postId" = $1
+    `, [postId]);
+}
+
 export async function countAmountOfComments(postId) {
     return connection.query(`
         SELECT COUNT(comments."postId") as amount
