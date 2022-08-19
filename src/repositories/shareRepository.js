@@ -35,3 +35,13 @@ export async function selectPostsShares(userId) {
         LIMIT 20
     `, [userId]);
 }
+
+export async function selectShare(userId, postId){
+    return connection.query(`
+        SELECT users.id as "userId"
+        FROM users
+        JOIN shares
+        ON shares."userId" = users.id
+        WHERE users.id = $1 AND shares."postId" = $2
+    `,[userId, postId]);
+}
