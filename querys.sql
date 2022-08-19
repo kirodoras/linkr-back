@@ -41,3 +41,9 @@ CREATE TABLE follows (
    "followerId" INTEGER REFERENCES users(id),
    "followedId" INTEGER REFERENCES users(id) 
 );
+
+CREATE TABLE shares (
+   id SERIAL NOT NULL PRIMARY KEY,
+   "userId" INTEGER REFERENCES users(id),
+   "postId" INTEGER REFERENCES posts(id)
+);
