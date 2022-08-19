@@ -21,7 +21,6 @@ export async function selectUsersByName(username) {
 
 
 export async function selectPostsUser(id) {
-    console.log(id);
     return connection.query(`
         SELECT posts.id AS "postId", posts."userId", posts.url, posts.article, posts.title, posts.image, posts.description, users.username, users."pictureUrl", posts."createdAt" as "createdAt" 
         FROM users LEFT JOIN posts

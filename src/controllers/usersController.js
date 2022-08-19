@@ -23,7 +23,6 @@ export async function getPostsUser(req, res) {
     try {
         const { id } = req.params;
         const { rows: postsUser } = await selectPostsUser(id);
-        console.log(postsUser);
         return res.send(postsUser);
     } catch (error) {
         res.status(500).send(error.message);
