@@ -1,5 +1,6 @@
 import { insertPost, selectPosts, deletePostById, deleteLikesPostByPostId, deleteHashtagsPostByPostId, updatePostById } from "../repositories/postsRepository.js";
 import { insertHashtagsPost } from "../repositories/hashtagsRepository.js";
+import { selectPostsShares } from "../repositories/shareRepository.js";
 
 export async function publishPost(req, res) {
     try {
@@ -20,8 +21,13 @@ export async function publishPost(req, res) {
 export async function getPosts(req, res) {
     try {
         const { userId } = req.params;
-        const { rows } = await selectPosts(userId);
-        res.send(rows);
+        const { rows: posts } = await selectPosts(userId);
+        const { rows: postsShares} = await selectPostsShares(userId);
+        let postsWithShares = postsShares.concat(posts);
+        const sort = postsWithShares.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+        });
+        res.send(sort);
     } catch (error) {
         res.status(500).send(error.message);
     }

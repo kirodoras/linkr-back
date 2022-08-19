@@ -16,3 +16,16 @@ export async function countAmountOfShares(postId) {
         GROUP BY shares."postId"
     `, [postId]);
 }
+
+export async function selectPostsShares(userId) {
+    return connection.query(`
+        SELECT posts.id AS "postId", posts."userId", posts.url, posts.article, posts.title, posts.image, posts.description, users.username, users."pictureUrl", posts."createdAt" as "createdAt" , users.username as "sharedBy" 
+        FROM posts
+        JOIN shares ON posts.id = shares."postId"
+        JOIN users ON users.id = shares."userId"
+        LEFT JOIN follows ON follows."followedId" = shares."userId"
+        WHERE follows."followerId" = $1 OR users.id = shares."userId"
+        ORDER BY posts."createdAt" DESC
+        LIMIT 20
+    `, [userId]);
+}

@@ -19,7 +19,7 @@ export async function insertPost(userId, url, article, title, description, image
 
 export async function selectPosts(userId) {
     return connection.query(`
-        SELECT posts.id AS "postId", posts."userId", posts.url, posts.article, posts.title, posts.image, posts.description, users.username, users."pictureUrl" 
+        SELECT posts.id AS "postId", posts."userId", posts.url, posts.article, posts.title, posts.image, posts.description, users.username, users."pictureUrl", posts."createdAt" as "createdAt"
         FROM posts
         JOIN users ON users.id = posts."userId"
         JOIN follows ON follows."followedId" = users.id
